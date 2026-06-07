@@ -1,0 +1,11 @@
+dataset,model,parameter_count_mean,latency_mean_sec,training_time_mean_sec,note
+METR-LA,ID-MLP-CA,117868.0,0.6368644471426705,233.0943277299998,Formal 10-seed mean; latency measured during evaluation.
+METR-LA,KNN+ID-MLP,117868.0,0.7646848099998935,162.32805391000062,Formal 10-seed mean; latency measured during evaluation.
+METR-LA,PPCA-lite+ID-MLP,117868.0,0.7932952671428016,144.49863987999987,Formal 10-seed mean; latency measured during evaluation.
+METR-LA,PyPOTS-SAITS+ID-MLP,117868.0,0.7977958899998417,156.72661525999948,Formal 10-seed mean; latency measured during evaluation.
+METR-LA,SRAF-ID,118830.0,1.7165947885714818,596.0674671799995,Formal 10-seed mean; latency measured during evaluation.
+PEMS-BAY,ID-MLP-CA,121644.0,1.3556707328572104,771.5879343299981,Formal 10-seed mean; latency measured during evaluation.
+PEMS-BAY,KNN+ID-MLP,121644.0,1.1921559342847363,291.9207316900007,Formal 10-seed mean; latency measured during evaluation.
+PEMS-BAY,PPCA-lite+ID-MLP,121644.0,1.2122946985716614,257.445951860003,Formal 10-seed mean; latency measured during evaluation.
+PEMS-BAY,PyPOTS-SAITS+ID-MLP,121644.0,1.4989085614278987,273.2221572099996,Formal 10-seed mean; latency measured during evaluation.
+PEMS-BAY,SRAF-ID,122606.0,2.6777454057151253,838.104860540001,Formal 10-seed mean; latency measured during evaluation.

@@ -1,0 +1,41 @@
+{
+  "models": [
+    "ID-MLP-CA",
+    "SRAF-ID-v1-formal",
+    "SRAF-ID-v2-current-best",
+    "SRAF-ID-v2-current-best-noGate",
+    "KNN+ID-MLP",
+    "PPCA-lite+ID-MLP",
+    "PyPOTS-SAITS+ID-MLP"
+  ],
+  "datasets": [
+    "METR-LA",
+    "PEMS-BAY"
+  ],
+  "faults": [
+    "clean",
+    "random_missing_20",
+    "random_missing_40",
+    "continuous_outage_24",
+    "gaussian_noise_high",
+    "linear_drift_high",
+    "stuck_at_last_value_high"
+  ],
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "expected_runs": 980,
+  "output_root": "E:\\paper_projects\\sensors_faulty_sensor_paper\\experiments\\sraf_v2_main_formal_10seed_run",
+  "existing_results_to_skip": 42,
+  "dry_run": false,
+  "created_at": "2026-05-26T00:49:19"
+}

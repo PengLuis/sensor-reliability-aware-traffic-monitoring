@@ -1,0 +1,19 @@
+model:
+  name: SRAF
+  backbone: GRU
+  hidden_dim: 64
+  alpha: 0.5
+  epsilon: 1.0e-6
+
+modules:
+  mask_aware_input_encoding: true
+  reliability_score_estimation: true
+  temporal_repair: true
+  adjacency_based_spatial_repair: true
+  reliability_gated_forecasting: true
+
+ablations:
+  no_reliability_gating: false
+  no_mask_encoding: false
+  no_temporal_repair: false
+  no_spatial_repair: false

@@ -1,0 +1,3 @@
+# Optional external-baseline dependencies.
+# Install only when reproducing the PyPOTS-SAITS baseline adapter.
+pypots>=0.8

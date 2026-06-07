@@ -1,0 +1,25 @@
+datasets:
+  - METR-LA
+  - PEMS-BAY
+
+models:
+  mandatory:
+    - HistoricalAverage
+    - Persistence
+    - GRU
+    - TCN
+    - SRAF-GRU
+  optional:
+    - STGCN_or_GraphWaveNet
+
+training_protocols:
+  - clean_trained
+  - corruption_aware
+
+faults:
+  - clean
+  - random_missing
+  - continuous_outage
+  - gaussian_noise
+  - linear_drift
+  - stuck_at_last_value

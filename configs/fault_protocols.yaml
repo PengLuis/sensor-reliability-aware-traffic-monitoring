@@ -1,0 +1,20 @@
+random_missing:
+  rates: [0.10, 0.20, 0.40]
+
+continuous_outage:
+  lengths: [6, 12, 24]
+
+gaussian_noise:
+  levels:
+    low: 0.10
+    medium: 0.30
+    high: 0.50
+
+linear_drift:
+  levels:
+    low: 0.10
+    medium: 0.30
+    high: 0.50
+
+stuck_at_last_value:
+  levels: [low, medium, high]

@@ -1,0 +1,21 @@
+project:
+  name: sensors_faulty_sensor_paper
+  seed: 42
+  output_dir: experiments
+
+task:
+  input_length: 12
+  horizon: 12
+  sample_minutes: 5
+  target_feature: speed
+  horizon_steps: [3, 6, 12]
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  datasets: [METR-LA, PEMS-BAY]
+
+integrity:
+  faults_apply_to_input_only: true
+  do_not_corrupt_target_y: true
+  require_traceable_outputs: true

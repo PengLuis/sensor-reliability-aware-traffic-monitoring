@@ -1,0 +1,5 @@
+dataset,model,avg_faulty_mae_mean,difference_vs_sraf_id_pct,note
+METR-LA,SRAF-ID,4.903770200411478,0.0,Final adopted method
+METR-LA,SRAF-ID-gated variant,4.915701731046041,-0.24331341288303981,Gated variant retained as ablation; not adopted because aggregate MAE did not improve.
+PEMS-BAY,SRAF-ID,1.9625125209490455,0.0,Final adopted method
+PEMS-BAY,SRAF-ID-gated variant,1.9629213054974877,-0.02082965301258272,Gated variant retained as ablation; not adopted because aggregate MAE did not improve.
