@@ -1,80 +1,78 @@
-# Lightweight Sensor-Reliability-Aware Traffic Monitoring
+# A Lightweight Sensor-Reliability-Aware Framework for Robust Traffic Monitoring under Missing and Faulty Sensor Observations
 
-This repository contains the public code package for the paper project:
+This repository is the public code and result-artifact package for the paper:
 
 **A Lightweight Sensor-Reliability-Aware Framework for Robust Traffic Monitoring under Missing and Faulty Sensor Observations**
 
-The project is positioned around sensor networks, IoT monitoring, intelligent sensing, and robust traffic sensor observation under missing, noisy, drifting, and faulty inputs.
+The work is positioned as robust sensor-network and IoT monitoring. It studies traffic forecasting when historical sensor observations are missing, noisy, drifting, continuously unavailable, or stuck at stale values.
 
-## What Is Included
+## Included in v1.0.0
 
-- `src/`: reusable Python implementation for datasets, simulated faults, metrics, baselines, SRAF models, seeding, and profiling.
-- `scripts/`: preprocessing, training, evaluation, ablation, auditing, and table-generation entry points.
-- `configs/`: default model, experiment, and fault protocol configurations.
-- `results/`: small paper-facing CSV/MD artifacts used as traceable table, figure, and audit sources.
-- `DATA_DOWNLOAD_GUIDE.md`: expected placement of public METR-LA and PEMS-BAY data files.
+- `src/`: reusable dataset, fault-injection, metric, baseline, SRAF, seeding, and profiling code.
+- `scripts/`: preprocessing, training, evaluation, ablation, audit, and paper-artifact entry points.
+- `configs/`: model, experiment-matrix, and controlled-fault configurations.
+- `results/`: compact CSV/JSON/Markdown artifacts supporting the reported tables, figures, and integrity checks.
+- `DATA_DOWNLOAD_GUIDE.md`: public download sources, accepted filenames, and required placement for METR-LA and PEMS-BAY.
 
-## What Is Not Included
+## Excluded from v1.0.0
 
-The repository intentionally excludes raw datasets, processed datasets, model checkpoints, large per-run logs, Word/PDF manuscript drafts, and private project notes.
+- Raw or processed METR-LA and PEMS-BAY datasets.
+- Model checkpoints, large per-seed outputs, full training logs, and temporary experiment directories.
+- Manuscript DOCX/PDF files, author information, and private project notes.
+- Third-party baseline source code. The optional PyPOTS-SAITS adapter requires the packages listed in `requirements-optional.txt`.
 
-Raw public datasets should be downloaded by users and placed under:
-
-```text
-data/raw/
-```
-
-See `DATA_DOWNLOAD_GUIDE.md` for accepted file names.
+These exclusions keep the release small and avoid redistributing externally hosted datasets or third-party software.
 
 ## Installation
+
+Python 3.9 or later is recommended. Create an isolated environment and install the core dependencies:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-The formal experiment scripts may require additional optional packages depending on which baseline adapters are enabled, such as `matplotlib`, `scikit-learn`, or PyPOTS-related dependencies.
-
-## Quick Smoke Check
-
-Use the synthetic smoke workflow only to check that the code runs. Synthetic outputs must not be used as paper evidence.
+For the optional PyPOTS-SAITS comparison:
 
 ```bash
-python scripts/test_faults.py
-python scripts/run_sraf.py --dataset synthetic_smoke --data-dir data/processed/synthetic_smoke --epochs 1 --output-dir experiments/synthetic_smoke_public
+python -m pip install -r requirements-optional.txt
 ```
 
 ## Reproduction Outline
 
-1. Download public METR-LA and PEMS-BAY files into `data/raw/`.
-2. Preprocess the datasets with the provided preprocessing scripts.
-3. Run baseline and SRAF experiment scripts using the configs in `configs/`.
-4. Regenerate summaries, tables, figures, and audits with the scripts under `scripts/`.
-5. Compare regenerated artifacts against the CSV/MD files in `results/`.
+1. Download METR-LA and PEMS-BAY from the public sources in `DATA_DOWNLOAD_GUIDE.md` and place the files under `data/raw/`.
+2. Preprocess METR-LA with `scripts/preprocess_data.py` and PEMS-BAY with `scripts/preprocess_pems_bay.py`.
+3. Run the same-backbone baselines and SRAF-ID experiments with the configurations under `configs/`.
+4. Run the formal multi-seed matrix with `scripts/run_sraf_v2_formal_10seed_matrix.py`; install `requirements-optional.txt` when reproducing the PyPOTS-SAITS baseline.
+5. Regenerate summaries and paper-facing artifacts with the audit, summary, plotting, and packaging scripts under `scripts/`.
+6. Compare regenerated outputs with the traceable files under `results/`.
 
-The paper-facing result values in this package are traceable to saved CSV/JSON/MD artifacts under `results/`. Do not treat missing files as completed evidence.
+The formal configuration snapshot is stored in `results/configs/formal_runner_config_snapshot.json`. Existing paper-facing values are included only where supporting CSV, JSON, or Markdown artifacts are present.
 
-## Main Entry Points
+## Quick Code Check
 
-- `scripts/preprocess_data.py`
-- `scripts/preprocess_pems_bay.py`
-- `scripts/run_baseline.py`
-- `scripts/run_sraf.py`
-- `scripts/run_experiment_matrix.py`
-- `scripts/run_sraf_v2_formal_10seed_matrix.py`
-- `scripts/summarize_results.py`
-- `scripts/plot_results.py`
-- `scripts/profile_model.py`
+The synthetic smoke path checks code execution only and must not be used as paper evidence:
+
+```bash
+python scripts/test_faults.py
+python scripts/preprocess_data.py --synthetic-smoke --processed-dir data/processed
+python scripts/run_sraf.py --dataset synthetic_smoke --data-dir data/processed/synthetic_smoke --epochs 1 --output-dir experiments/synthetic_smoke_public
+```
 
 ## Integrity Notes
 
-- Faults are applied to model inputs only, not to target `Y`.
-- Random seeds are set in the training and experiment scripts.
-- Public data only; no real disaster labels are required.
-- Disaster or emergency settings are used only as application motivation for faulty sensor observations.
-- If an experiment artifact is missing, mark it as missing rather than inventing values.
+- Controlled faults are applied to model inputs, not forecast targets.
+- Formal experiments use fixed random seeds and saved configurations.
+- Only public datasets are used; no real disaster labels are required.
+- Emergency or disaster conditions are application motivation only, not modeled physical processes.
+- Missing evidence must be reported as missing rather than reconstructed or invented.
+
+## License
+
+The repository code is released under the MIT License. Dataset files and third-party packages remain subject to their original terms.
 
 ## Citation
 
-A formal citation entry can be added after acceptance or DOI assignment.
+A formal bibliographic entry will be added after publication metadata or a DOI becomes available.
