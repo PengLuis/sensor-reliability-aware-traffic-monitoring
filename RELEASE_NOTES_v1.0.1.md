@@ -16,7 +16,7 @@ Planned release notes. This version has not been published.
 - Internal formal implementation: `A3_mlp_only_softmax_no_profile`.
 - Two-way softmax temporal-spatial fusion.
 - No additional learned reliability gate.
-- Approximately `0.17%` parameter increase, with measured latency ratios of `1.906x` and `2.184x` in the saved formal artifacts.
+- The saved formal artifacts show limited parameter growth (`0.17%`) but measurable latency overhead (`1.906x` and `2.184x`).
 
 ## Included
 
@@ -38,4 +38,4 @@ Planned release notes. This version has not been published.
 - No real sensor-fault logs or disaster labels are included.
 - Faults are controlled synthetic stress tests on historical observations.
 - Evaluation covers one identity-enhanced forecasting backbone and two public traffic datasets.
-- The release is parameter-efficient in model size but incurs material inference latency.
+- The release shows limited parameter growth but measurable latency overhead.

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Please cite the manuscript and this software repository if you use SRAF-ID."
-title: "SRAF-ID: A Low-Parameter Sensor-Reliability-Aware Framework for Robust Traffic Speed Forecasting under Missing and Faulty Sensor Observations"
+title: "SRAF-ID: A Sensor-Reliability-Aware Framework for Robust Traffic Speed Forecasting under Missing and Faulty Sensor Observations"
 type: software
 authors:
   - family-names: Lu

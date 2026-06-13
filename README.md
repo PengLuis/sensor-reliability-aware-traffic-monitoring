@@ -1,4 +1,4 @@
-# SRAF-ID: A Low-Parameter Sensor-Reliability-Aware Framework for Robust Traffic Speed Forecasting under Missing and Faulty Sensor Observations
+# SRAF-ID: A Sensor-Reliability-Aware Framework for Robust Traffic Speed Forecasting under Missing and Faulty Sensor Observations
 
 This repository contains the public code and compact result artifacts for the SRAF-ID Sensors manuscript. The study evaluates traffic speed forecasting under controlled missing, outage, noise, drift, and stuck-value corruption of historical sensor observations. It does not claim online detection of unknown faults or universal robustness to real sensor failures.
 
@@ -10,10 +10,10 @@ This repository contains the public code and compact result artifacts for the SR
 - Fusion: learned two-way softmax over temporal and spatial repair candidates
 - Additional learned reliability gate: none
 - Observed-input blend: fixed at `0.5`
-- Model-size overhead: about `0.17%` relative to matched ID-MLP-CA
-- Full-test inference latency: `1.906x` on METR-LA and `2.184x` on PEMS-BAY in the saved formal artifacts
+- Recorded parameter growth: about `0.17%` relative to matched ID-MLP-CA
+- Recorded full-test inference latency: `1.906x` on METR-LA and `2.184x` on PEMS-BAY in the saved formal artifacts
 
-The framework is low-parameter, not low-latency.
+The saved results show limited parameter growth but measurable latency overhead.
 
 ## Recorded Execution Environment
 
