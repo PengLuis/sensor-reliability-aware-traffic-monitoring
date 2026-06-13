@@ -5,7 +5,7 @@ The repository is public and licensed under the MIT License.
 ## Version Status
 
 - `v1.0.0`: preserved initial public package.
-- `v1.0.1`: planned manuscript-consistent matched-baseline release; not published while the metadata items in `RELEASE_BLOCKERS.md` remain unresolved.
+- `v1.0.1`: planned manuscript-consistent matched-baseline release; author and environment metadata are resolved, but the GitHub Release has not yet been published.
 
 ## Included
 

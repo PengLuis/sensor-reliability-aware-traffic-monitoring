@@ -11,10 +11,12 @@ authors:
     email: damingwu@ninhm.ac.cn
   - family-names: Lan
     given-names: Shaofei
+    email: lanshaofei24@mails.ucas.ac.cn
   - family-names: Guo
     given-names: Beinan
+    email: 202131260004@mail.bnu.edu.cn
   - family-names: Li
     given-names: Zixiao
+    email: zixiaoli@ninhm.ac.cn
 repository-code: "https://github.com/PengLuis/sensor-reliability-aware-traffic-monitoring"
 license: MIT
-

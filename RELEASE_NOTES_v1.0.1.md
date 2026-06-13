@@ -26,6 +26,12 @@ Planned release notes. This version has not been published.
 - Corrected Figure 4/6 source CSVs, 600-dpi PNGs, and a deterministic regeneration script.
 - Dataset download and preprocessing instructions.
 
+## Recorded Environment
+
+- Python `3.9.23` and PyTorch `2.4.1+cu121`.
+- CUDA 12.1 runtime on an NVIDIA GeForce RTX 4060 Laptop GPU.
+- 13th Gen Intel Core i9-13900HX CPU and 64-bit Microsoft Windows 11.
+
 ## Excluded and Limitations
 
 - Raw/processed datasets, checkpoints, and large logs are excluded.

@@ -15,6 +15,14 @@ This repository contains the public code and compact result artifacts for the SR
 
 The framework is low-parameter, not low-latency.
 
+## Recorded Execution Environment
+
+- Python `3.9.23`
+- PyTorch `2.4.1+cu121` with CUDA 12.1 runtime
+- NVIDIA GeForce RTX 4060 Laptop GPU
+- 13th Gen Intel Core i9-13900HX CPU
+- 64-bit Microsoft Windows 11
+
 ## Included
 
 - `src/`: models, faults, metrics, data utilities, and shared protocol loader.
