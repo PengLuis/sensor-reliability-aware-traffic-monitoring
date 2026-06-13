@@ -1,31 +1,26 @@
 # Public Release Manifest
 
+The repository is public and licensed under the MIT License.
+
+## Version Status
+
+- `v1.0.0`: preserved initial public package.
+- `v1.0.1`: planned manuscript-consistent matched-baseline release; not published while the metadata items in `RELEASE_BLOCKERS.md` remain unresolved.
+
 ## Included
 
-- Core code: `src/`
-- Experiment and utility scripts: `scripts/*.py`
-- Configs: `configs/*.yaml`
-- Dataset instructions: `DATA_DOWNLOAD_GUIDE.md`
-- Small traceable paper-facing result artifacts: `results/`
+- Core source under `src/`.
+- Experiment and audit scripts under `scripts/`.
+- Formal matched protocol in `configs/matched_baseline_formal.yaml`.
+- Dataset placement instructions in `DATA_DOWNLOAD_GUIDE.md`.
+- Compact paper-facing CSV, JSON, and Markdown artifacts under `results/`.
+- Corrected 600-dpi manuscript summary figures and their source CSVs under `results/paper_ready_figures/`.
+- MIT `LICENSE` and `CITATION.cff`.
 
 ## Excluded
 
-- Raw or processed datasets
-- Model checkpoints and binary masks
-- Large per-run logs
-- Word/PDF manuscript drafts
-- Internal review, planning, and private project notes
-- Python bytecode and cache directories
-
-## License Status
-
-`TODO`: choose a license before making the GitHub repository public. MIT is common for academic code, but this is an author/legal choice.
-
-## GitHub Publication Checklist
-
-- Choose the GitHub repository name.
-- Choose a software license.
-- Confirm whether paper title and author names should appear in the README now or only after acceptance.
-- Confirm whether to include a citation file before acceptance.
-- Create the GitHub repository as public.
-- Push this folder as the repository root.
+- Raw and processed datasets.
+- Model checkpoints, binary masks, large per-run logs, and temporary experiments.
+- Manuscript DOCX/PDF files and private author records.
+- Third-party source code.
+- Real-world sensor-fault logs or disaster labels.

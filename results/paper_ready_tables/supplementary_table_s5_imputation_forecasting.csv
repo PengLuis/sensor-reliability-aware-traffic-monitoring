@@ -1,0 +1,9 @@
+Dataset,Model,Average faulty-input MAE,Standard deviation,Seeds,Relative gain of SRAF-ID (%),Known fault-location use
+METR-LA,KNN+ID-MLP,6.498913335800171,0.07170559925326238,10,25.25553054040873,Yes; controlled-oracle mask for imputation
+METR-LA,PPCA-lite+ID-MLP,7.581082479159038,0.030307804246641548,10,35.925004023682526,Yes; controlled-oracle mask for imputation
+METR-LA,PyPOTS-SAITS+ID-MLP,7.819110703468323,0.1648729720702886,10,37.87556567874418,Yes; controlled-oracle mask for imputation
+METR-LA,SRAF-ID,4.8575782934824625,0.018764845637326482,10,0.0,Training repair loss only; not used for finite-valued-fault inference
+PEMS-BAY,KNN+ID-MLP,2.5966103255748747,0.011966999183997486,10,24.741660958824216,Yes; controlled-oracle mask for imputation
+PEMS-BAY,PPCA-lite+ID-MLP,2.7797241111596427,0.008391478672351115,10,29.69928941674429,Yes; controlled-oracle mask for imputation
+PEMS-BAY,PyPOTS-SAITS+ID-MLP,3.072338990370432,0.11250814983616166,10,36.39485068137928,Yes; controlled-oracle mask for imputation
+PEMS-BAY,SRAF-ID,1.9541658023993176,0.008194108220796062,10,0.0,Training repair loss only; not used for finite-valued-fault inference

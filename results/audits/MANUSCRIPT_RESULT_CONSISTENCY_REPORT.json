@@ -1,0 +1,113 @@
+{
+  "status": "PASS",
+  "evidence_root": "E:\\paper_projects\\sensors_faulty_sensor_paper",
+  "checks": [
+    {
+      "name": "METR-LA ID-MLP-CA faulty average",
+      "expected": 5.1415,
+      "actual": 5.141454919179281,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "METR-LA SRAF-ID faulty average",
+      "expected": 4.8576,
+      "actual": 4.8575782934824625,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "METR-LA relative reduction",
+      "expected": 5.521,
+      "actual": 5.521328693126668,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "PEMS-BAY ID-MLP-CA faulty average",
+      "expected": 1.991,
+      "actual": 1.9909850517908734,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "PEMS-BAY SRAF-ID faulty average",
+      "expected": 1.9542,
+      "actual": 1.9541658023993176,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "PEMS-BAY relative reduction",
+      "expected": 1.849,
+      "actual": 1.8492981330240121,
+      "passed": true,
+      "source": "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    },
+    {
+      "name": "positive fault-wise MAE comparisons",
+      "expected": 11,
+      "actual": 11.0,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s3_faultwise_mae.csv"
+    },
+    {
+      "name": "positive horizon-12 comparisons",
+      "expected": 11,
+      "actual": 11.0,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s6_horizon12.csv"
+    },
+    {
+      "name": "METR-LA parameter increase",
+      "expected": 0.178,
+      "actual": 0.17816540536872427,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s4_complexity_latency.csv"
+    },
+    {
+      "name": "METR-LA latency ratio",
+      "expected": 1.906,
+      "actual": 1.9062377869181897,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s4_complexity_latency.csv"
+    },
+    {
+      "name": "PEMS-BAY parameter increase",
+      "expected": 0.173,
+      "actual": 0.17263490184473707,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s4_complexity_latency.csv"
+    },
+    {
+      "name": "PEMS-BAY latency ratio",
+      "expected": 2.184,
+      "actual": 2.1843868514701064,
+      "passed": true,
+      "source": "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s4_complexity_latency.csv"
+    }
+  ],
+  "generated_tables": [
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\main_table_avg_faulty.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\main_table_baseline_comparison.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\main_table_nogate_ablation.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\main_table_per_fault_mae.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\main_table_saits_ppca_knn.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_complexity_latency.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_horizon_metrics.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_seed_stability.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s1_seed_level_paired_statistics.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s2_rmse.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s3_faultwise_mae.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s4_complexity_latency.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s5_imputation_forecasting.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\supplementary_table_s6_horizon12.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table3_ten_seed_faulty_summary.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_2_main_avg_faulty_mae.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_3_per_fault_mae.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_4_external_imputation_baselines.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_5_ablation_gated_variant.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_6_horizon_metrics.csv",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\github_release\\sraf-id-public-code\\results\\paper_ready_tables\\table_7_complexity_latency.csv"
+  ]
+}

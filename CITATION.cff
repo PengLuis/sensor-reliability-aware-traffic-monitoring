@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Please cite the manuscript and this software repository if you use SRAF-ID."
+title: "SRAF-ID: A Low-Parameter Sensor-Reliability-Aware Framework for Robust Traffic Speed Forecasting under Missing and Faulty Sensor Observations"
+type: software
+authors:
+  - family-names: Lu
+    given-names: Peng
+    email: lupeng24@mails.ucas.ac.cn
+  - family-names: Wu
+    given-names: Daming
+    email: damingwu@ninhm.ac.cn
+  - family-names: Lan
+    given-names: Shaofei
+  - family-names: Guo
+    given-names: Beinan
+  - family-names: Li
+    given-names: Zixiao
+repository-code: "https://github.com/PengLuis/sensor-reliability-aware-traffic-monitoring"
+license: MIT
+

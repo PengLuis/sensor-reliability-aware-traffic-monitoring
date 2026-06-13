@@ -39,22 +39,21 @@ if str(ROOT) not in sys.path:
 from scripts.run_metr_la_sraf_stid_same_backbone_gain import model_param_count  # noqa: E402
 from scripts.run_metr_la_strong_clean_backbone_integration import apply_fault, resolve_device  # noqa: E402
 from scripts.run_sraf_id_repair_factor_ablation import build_factor_model  # noqa: E402
+import scripts.run_sraf_id_repair_v3_light_diagnostic as repair_training_module  # noqa: E402
 from scripts.run_sraf_id_repair_v3_light_diagnostic import predict_sraf, train_v3, write_csv  # noqa: E402
 from scripts.run_sraf_v2_publication_baseline_reproduction_and_selection import load_payload, safe_metrics  # noqa: E402
+from src.protocols.matched_protocol import (  # noqa: E402
+    DATASETS as PROTOCOL_DATASETS,
+    MATCHED_TRAIN_FAULTS,
+    SEEDS as PROTOCOL_SEEDS,
+    TEST_FAULTS,
+)
 
 
 STAGE = "SRAF_ID_FINAL_FIGURE_TABLE_REPRODUCTION_GATE"
-DATASETS = ["METR-LA", "PEMS-BAY"]
-SEEDS = [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
-FAULTS = [
-    "clean",
-    "random_missing_20",
-    "random_missing_40",
-    "continuous_outage_24",
-    "gaussian_noise_high",
-    "linear_drift_high",
-    "stuck_at_last_value_high",
-]
+DATASETS = list(PROTOCOL_DATASETS)
+SEEDS = list(PROTOCOL_SEEDS)
+FAULTS = list(TEST_FAULTS)
 LOCAL_FAULT_SPECS = {
     "clean": {"fault": "clean", "label": "clean"},
     "random_missing_20": {"fault": "random_missing", "rate": 0.20, "label": "random_missing_20"},
@@ -79,6 +78,7 @@ PALETTE = {
     "text": "#222222",
 }
 BASELINE_ROOT = ROOT / "experiments" / "sraf_v2_main_formal_10seed_run"
+MATCHED_ID_ROOT = ROOT / "experiments" / "id_mlp_ca_matched_fault_distribution_10seed"
 
 
 @dataclass(frozen=True)
@@ -195,6 +195,9 @@ def run_one_dataset_seed(job: dict[str, Any]) -> dict[str, Any]:
         best_epoch = int(curves_df.loc[curves_df["best_selection_val_loss"].idxmin(), "epoch"]) if not curves_df.empty else -1
         meta = {"training_time_sec": float("nan"), "best_epoch": best_epoch, "best_val_loss": float(curves_df["best_selection_val_loss"].min()) if not curves_df.empty else float("nan"), "reused_checkpoint": True}
     else:
+        # The saved formal artifacts used this exact five-fault rotation. Keep
+        # the training module synchronized with the single public config.
+        repair_training_module.FAULTS = list(MATCHED_TRAIN_FAULTS)
         meta, curves = train_v3(
             model,
             "SRAF-ID",
@@ -286,7 +289,13 @@ def load_baseline_metrics() -> pd.DataFrame:
     }
     df = df[df["model"].isin(model_map)].copy()
     df["model"] = df["model"].map(model_map)
+    matched_path = MATCHED_ID_ROOT / "aggregate" / "formal_10seed_metrics_by_model_fault.csv"
+    if matched_path.exists():
+        matched = pd.read_csv(matched_path)
+        df = pd.concat([df[df["model"] != "ID-MLP-CA"], matched], ignore_index=True, sort=False)
     df["source_result_file"] = str(path)
+    if matched_path.exists():
+        df.loc[df["model"] == "ID-MLP-CA", "source_result_file"] = str(matched_path)
     df["is_aggregate_source"] = True
     return df
 
@@ -348,7 +357,13 @@ def combined_frames(out: Path, new_agg: pd.DataFrame, new_avg: pd.DataFrame, new
     }
     base_avg = base_avg[base_avg["model"].isin(base_map)].copy()
     base_avg["model"] = base_avg["model"].map(base_map)
+    matched_avg_path = MATCHED_ID_ROOT / "aggregate" / "formal_10seed_avg_faulty_summary.csv"
+    if matched_avg_path.exists():
+        matched_avg = pd.read_csv(matched_avg_path)
+        base_avg = pd.concat([base_avg[base_avg["model"] != "ID-MLP-CA"], matched_avg], ignore_index=True, sort=False)
     base_avg["source_result_file"] = str(base_avg_path)
+    if matched_avg_path.exists():
+        base_avg.loc[base_avg["model"] == "ID-MLP-CA", "source_result_file"] = str(matched_avg_path)
     comp_path = BASELINE_ROOT / "aggregate" / "formal_10seed_complexity_latency.csv"
     base_comp = pd.read_csv(comp_path)
     base_comp = base_comp[base_comp["model"].isin(base_map)].copy()
@@ -358,6 +373,12 @@ def combined_frames(out: Path, new_agg: pd.DataFrame, new_avg: pd.DataFrame, new
         latency_mean_sec=("latency_mean_sec", "mean"),
         training_time_mean_sec=("training_time_sec", "mean"),
     )
+    matched_comp_path = MATCHED_ID_ROOT / "aggregate" / "formal_10seed_complexity_latency.csv"
+    if matched_comp_path.exists():
+        matched_comp = pd.read_csv(matched_comp_path).rename(
+            columns={"parameter_count": "parameter_count_mean", "training_time_sec": "training_time_mean_sec"}
+        )
+        base_comp = pd.concat([base_comp[base_comp["model"] != "ID-MLP-CA"], matched_comp], ignore_index=True, sort=False)
     all_agg = pd.concat([base_agg, new_agg], ignore_index=True, sort=False)
     all_avg = pd.concat([base_avg, new_avg], ignore_index=True, sort=False)
     all_comp = pd.concat([base_comp, new_complexity], ignore_index=True, sort=False)
@@ -468,15 +489,19 @@ def make_tables(out: Path, all_agg: pd.DataFrame, all_avg: pd.DataFrame, all_com
     h["gain"] = (h["ca_h12"] - h["s_h12"]) / h["ca_h12"] * 100.0
     table7 = pd.DataFrame({"Dataset": h.dataset, "Fault": h.fault, "ID-MLP-CA h12 MAE mean ± std": [fmt_ms(a, b) for a, b in zip(h.ca_h12, h.ca_h12_std)], "SRAF-ID h12 MAE mean ± std": [fmt_ms(a, b) for a, b in zip(h.s_h12, h.s_h12_std)], "h12 Gain": [f"{x:.3f}%" for x in h.gain], "Outcome": ["improved" if x > 0 else "negative" for x in h.gain]})
     save_table(table7, tables, "table7_h12_comparison")
-    rows = []
-    for ds in DATASETS:
-        s = all_avg[(all_avg.dataset == ds) & (all_avg.model == "SRAF-ID")].iloc[0]
-        g = all_avg[(all_avg.dataset == ds) & (all_avg.model == "SRAF-ID-gated")].iloc[0]
-        rows.append({"Dataset": ds, "Variant": "SRAF-ID", "Average faulty MAE mean ± std": fmt_ms(s.avg_faulty_mae_mean, s.avg_faulty_mae_std), "Difference vs SRAF-ID": "0.000%", "Interpretation": "final method"})
-        rows.append({"Dataset": ds, "Variant": "SRAF-ID-gated", "Average faulty MAE mean ± std": fmt_ms(g.avg_faulty_mae_mean, g.avg_faulty_mae_std), "Difference vs SRAF-ID": f"{(g.avg_faulty_mae_mean - s.avg_faulty_mae_mean) / s.avg_faulty_mae_mean * 100.0:.3f}%", "Interpretation": "gated ablation/supplementary variant"})
-        for variant in ["SRAF-ID-temporal-only", "SRAF-ID-spatial-only", "SRAF-ID-fixed-fusion"]:
-            rows.append({"Dataset": ds, "Variant": variant, "Average faulty MAE mean ± std": "NA", "Difference vs SRAF-ID": "NA", "Interpretation": "gap: not supported by current formal code without additional non-trivial switches"})
-    table8 = pd.DataFrame(rows)
+    formal_ablation_path = ROOT / "experiments" / "sraf_id_formal_repair_source_ablation" / "table8_ablation_study_revised.csv"
+    if formal_ablation_path.exists():
+        table8 = pd.read_csv(formal_ablation_path)
+    else:
+        rows = []
+        for ds in DATASETS:
+            s = all_avg[(all_avg.dataset == ds) & (all_avg.model == "SRAF-ID")].iloc[0]
+            g = all_avg[(all_avg.dataset == ds) & (all_avg.model == "SRAF-ID-gated")].iloc[0]
+            rows.append({"Dataset": ds, "Variant": "SRAF-ID", "Average faulty MAE mean ± std": fmt_ms(s.avg_faulty_mae_mean, s.avg_faulty_mae_std), "Difference vs SRAF-ID": "0.000%", "Interpretation": "final method"})
+            rows.append({"Dataset": ds, "Variant": "SRAF-ID-gated", "Average faulty MAE mean ± std": fmt_ms(g.avg_faulty_mae_mean, g.avg_faulty_mae_std), "Difference vs SRAF-ID": f"{(g.avg_faulty_mae_mean - s.avg_faulty_mae_mean) / s.avg_faulty_mae_mean * 100.0:.3f}%", "Interpretation": "gated ablation/supplementary variant"})
+            for variant in ["SRAF-ID-temporal-only", "SRAF-ID-spatial-only", "SRAF-ID-fixed-fusion"]:
+                rows.append({"Dataset": ds, "Variant": variant, "Average faulty MAE mean ± std": "NA", "Difference vs SRAF-ID": "NA", "Interpretation": "formal evidence unavailable"})
+        table8 = pd.DataFrame(rows)
     save_table(table8, tables, "table8_ablation_study")
     rows = []
     for ds in DATASETS:
@@ -721,6 +746,7 @@ def write_manifest_and_reports(out: Path, all_agg: pd.DataFrame, all_avg: pd.Dat
         gains[ds] = pct_gain(ca, s)
     source_inputs = {
         "baseline_formal_root": str(BASELINE_ROOT),
+        "matched_id_mlp_ca_root": str(MATCHED_ID_ROOT),
         "new_mainline_per_run_root": str(out / "per_run"),
         "new_mainline_aggregate": str(out / "sraf_id_softmax_formal_aggregate_by_fault.csv"),
         "combined_metrics": str(out / "combined_metrics_by_model_fault.csv"),
@@ -763,7 +789,7 @@ def write_manifest_and_reports(out: Path, all_agg: pd.DataFrame, all_avg: pd.Dat
         "",
         f"- expected new mainline training jobs: `{expected}`",
         f"- completed/skipped jobs: `{completed}`",
-        "- existing baseline formal results available: `YES`",
+        "- matched ID-MLP-CA formal results available: `YES`",
         "- seed coverage for new SRAF-ID: `42-51`" if completed == expected else "- seed coverage for new SRAF-ID: `PARTIAL`",
         "- faults on historical speed only: inherited from `apply_fault` and audited by protocol; target Y clean in loader/evaluation.",
         "- split/scaler/input/horizon: inherited from processed payload loader used by prior formal runner.",
@@ -807,8 +833,8 @@ def write_manifest_and_reports(out: Path, all_agg: pd.DataFrame, all_avg: pd.Dat
         "- none" if completed == expected else "- see `run_manifest.csv`",
         "",
         "## Rerun Summary",
-        "- rerun scope: new SRAF-ID softmax-fusion mainline only.",
-        "- baseline reruns: `NO`; existing formal baseline CSVs were read.",
+        "- rerun scope: existing SRAF-ID softmax-fusion mainline plus matched ID-MLP-CA evidence integration.",
+        "- ID-MLP-CA baseline: retrained separately with the final SRAF-ID five-fault training distribution and matched test-mask seed rule.",
         "- previous formal directories overwritten: `NO`",
         "",
         "## Table Outputs",
@@ -865,6 +891,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-workers", type=int, default=1)
     p.add_argument("--skip-existing", action="store_true")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--train-only", action="store_true", help="Stop after aggregating newly trained SRAF-ID metrics.")
+    p.add_argument("--datasets", default=",".join(DATASETS), help="Comma-separated dataset subset.")
+    p.add_argument("--seeds", default=",".join(str(seed) for seed in SEEDS), help="Comma-separated seed subset.")
     p.add_argument("--epochs", type=int, default=60)
     p.add_argument("--patience", type=int, default=10)
     p.add_argument("--batch-size", type=int, default=64)
@@ -885,16 +914,24 @@ def main() -> None:
     out = ROOT / args.output_dir
     ensure_layout(out)
     set_style()
-    specs = [RunSpec(ds, seed) for ds in DATASETS for seed in SEEDS]
+    datasets = [item.strip() for item in args.datasets.split(",") if item.strip()]
+    seeds = [int(item.strip()) for item in args.seeds.split(",") if item.strip()]
+    unknown = sorted(set(datasets) - set(DATASETS))
+    if unknown:
+        raise ValueError(f"Unknown datasets: {unknown}; allowed: {DATASETS}")
+    if not datasets or not seeds:
+        raise ValueError("At least one dataset and one seed are required.")
+    specs = [RunSpec(ds, seed) for ds in datasets for seed in seeds]
     plan = {
         "stage": STAGE,
         "expected_new_mainline_training_jobs": len(specs),
         "expected_new_mainline_metric_rows": len(specs) * len(FAULTS),
-        "datasets": DATASETS,
+        "datasets": datasets,
         "faults": FAULTS,
-        "seeds": SEEDS,
+        "seeds": seeds,
         "model_run": "SRAF-ID",
         "baseline_source": str(BASELINE_ROOT),
+        "matched_id_mlp_ca_source": str(MATCHED_ID_ROOT),
         "max_workers": args.max_workers,
         "dry_run": args.dry_run,
         "created_at": datetime.now().isoformat(timespec="seconds"),
@@ -932,6 +969,9 @@ def main() -> None:
     if new_rows.empty:
         raise RuntimeError("No new SRAF-ID metrics were produced.")
     new_agg, new_avg, new_comp = aggregate_new_metrics(out, new_rows)
+    if args.train_only:
+        print("Training-only run completed; optional historical comparison packaging was skipped.", flush=True)
+        return
     all_agg, all_avg, all_comp = combined_frames(out, new_agg, new_avg, new_comp)
     make_tables(out, all_agg, all_avg, all_comp)
     make_architecture_figures(out)

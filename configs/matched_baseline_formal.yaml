@@ -1,0 +1,54 @@
+paper_model:
+  public_name: SRAF-ID
+  internal_implementation: A3_mlp_only_softmax_no_profile
+  model_class: src.models.strong_backbones_v3.SRAFOfficialStyleSTIDWrapperFactorAblation
+  fusion: two_way_softmax
+  learned_reliability_gate: false
+  observed_input_blend: 0.5
+
+datasets:
+  - METR-LA
+  - PEMS-BAY
+
+seeds: [42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
+
+# This order is the order used by the saved formal runs. It is part of the
+# deterministic batch-level rotation and must not be reordered silently.
+matched_train_faults:
+  - continuous_outage_24
+  - random_missing_40
+  - gaussian_noise_high
+  - linear_drift_high
+  - stuck_at_last_value_high
+
+test_faults:
+  - clean
+  - random_missing_20
+  - random_missing_40
+  - continuous_outage_24
+  - gaussian_noise_high
+  - linear_drift_high
+  - stuck_at_last_value_high
+
+validation_faults:
+  - random_missing_40
+  - gaussian_noise_high
+  - stuck_at_last_value_high
+
+training:
+  epochs: 60
+  patience: 10
+  batch_size: 64
+  optimizer: Adam
+  learning_rate: 0.002
+  weight_decay: 0.0001
+  gradient_clip: 5.0
+  forecast_loss: MAE
+  repair_loss_weight_sraf_id: 0.05
+  repair_loss_weight_id_mlp_ca: 0.0
+  validation_selection: 0.5 * clean_MAE + 0.5 * mean_corrupted_MAE
+  batch_shuffle_seed_rule: seed + epoch
+  training_fault_seed_rule: seed + global_batch_step
+  validation_fault_seed_rule: seed + 1000 + validation_fault_index
+  test_fault_seed_rule: seed + test_fault_index
+

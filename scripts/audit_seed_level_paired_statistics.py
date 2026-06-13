@@ -16,7 +16,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 FINAL_PACKAGE = ROOT / "experiments" / "sraf_id_final_figure_table_package"
-FORMAL_BASELINE = ROOT / "experiments" / "sraf_v2_main_formal_10seed_run"
+FORMAL_BASELINE = ROOT / "experiments" / "id_mlp_ca_matched_fault_distribution_10seed"
 OUT_CSV = ROOT / "seed_level_paired_statistics.csv"
 OUT_MD = ROOT / "seed_level_paired_statistics_summary.md"
 
@@ -106,18 +106,20 @@ def wilcoxon_exact_pvalue(diffs: list[float]) -> tuple[float, float]:
 
 def main() -> None:
     sraf = pd.read_csv(FINAL_PACKAGE / "sraf_id_softmax_formal_per_seed_metrics.csv")
+    baseline = pd.read_csv(FORMAL_BASELINE / "aggregate" / "formal_10seed_per_seed_metrics.csv")
     rows: list[dict[str, object]] = []
     for dataset in DATASETS:
         for fault in FAULTS:
             pairs: list[tuple[int, float, float, float]] = []
             for seed in SEEDS:
-                baseline_path = (
-                    FORMAL_BASELINE
-                    / "per_run"
-                    / f"{dataset_key(dataset)}__id-mlp-ca__{fault}__seed{seed}"
-                    / "metrics.csv"
-                )
-                b = float(read_one_metric_csv(baseline_path)["mae"])
+                baseline_row = baseline[
+                    (baseline["dataset"] == dataset)
+                    & (baseline["seed"] == seed)
+                    & (baseline["fault"] == fault)
+                ]
+                if len(baseline_row) != 1:
+                    raise ValueError(f"Missing matched ID-MLP-CA row: {dataset} {fault} seed={seed}")
+                b = float(baseline_row.iloc[0]["mae"])
                 subset = sraf[(sraf["dataset"] == dataset) & (sraf["seed"] == seed) & (sraf["fault"] == fault)]
                 if len(subset) != 1:
                     raise ValueError(f"Missing SRAF-ID row: {dataset} {fault} seed={seed}")
@@ -149,9 +151,17 @@ def main() -> None:
                     "wilcoxon_signed_rank_statistic": w_stat,
                     "wilcoxon_exact_two_sided_p_value": p_w,
                     "raw_seed_deltas": ";".join(f"{seed}:{delta:.9f}" for seed, _, _, delta in pairs),
-                    "id_mlp_ca_source": str(FORMAL_BASELINE / "per_run" / f"{dataset_key(dataset)}__id-mlp-ca__{{fault}}__seed{{seed}}" / "metrics.csv"),
+                    "id_mlp_ca_source": str(FORMAL_BASELINE / "aggregate" / "formal_10seed_per_seed_metrics.csv"),
                     "sraf_id_source": str(FINAL_PACKAGE / "sraf_id_softmax_formal_per_seed_metrics.csv"),
-                    "interpretation": "10/10 seed wins" if all(d > 0 for d in deltas) else "positive aggregate delta with mixed seed-level behavior",
+                    "interpretation": (
+                        "10/10 seed wins"
+                        if all(d > 0 for d in deltas)
+                        else "0/10 seed wins; SRAF-ID worse in all seeds"
+                        if all(d < 0 for d in deltas)
+                        else "positive aggregate delta with mixed seed-level behavior"
+                        if mean_delta > 0
+                        else "negative aggregate delta with mixed seed-level behavior"
+                    ),
                 }
             )
 
@@ -179,8 +189,7 @@ def main() -> None:
             "Notes:",
             "- Paired t-test p-values are computed by numerical integration of the Student t density with df=9.",
             "- Wilcoxon p-values are exact two-sided signed-rank p-values from enumerating all sign assignments.",
-            "- PEMS-BAY linear_drift_high has positive aggregate mean delta but no paired-test statistical support.",
-            "- PEMS-BAY stuck_at_last_value_high has a small positive mean reduction and 8/10 seed wins.",
+            "- Interpretations are generated directly from the paired deltas and are not copied from earlier baseline runs.",
         ]
     )
     OUT_MD.write_text("\n".join(lines), encoding="utf-8")
