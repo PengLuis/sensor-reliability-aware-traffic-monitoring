@@ -1,0 +1,10 @@
+panel,component,role,notes
+Inputs,zero-filled speed,speed input,Unavailable speed entries are zero-filled before repair.
+Inputs,observation mask,availability input,Marks finite observations versus unavailable positions.
+Inputs,adjacency,spatial structure,Fixed supplied graph used by the spatial candidate.
+Candidate generation,temporal branch,same-sensor evidence,Carries forward same-sensor temporal observations.
+Candidate generation,spatial branch,adjacent-sensor evidence,Uses row-normalized fixed-adjacency aggregation without mask-based adjacency filtering.
+Adaptive fusion,fusion features,weight inputs,"Local variation, missingness/stuck indicators, candidate disagreement, and temporal context."
+Adaptive fusion,two-way softmax,candidate weighting,Produces temporal and spatial fusion weights.
+Output rule,observed-input blend,final repaired history,Finite observations are blended with fused repair; unavailable positions use fused repair.
+Training only,repair loss,auxiliary supervision,Uses controlled fault-location mask during training only.

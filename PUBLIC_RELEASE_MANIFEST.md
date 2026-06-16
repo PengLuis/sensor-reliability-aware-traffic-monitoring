@@ -16,7 +16,8 @@ The repository is public and licensed under the MIT License.
 - Formal matched protocol in `configs/matched_baseline_formal.yaml`.
 - Corrected CSV dataset placement instructions in `DATA_DOWNLOAD_GUIDE.md`.
 - Compact paper-facing CSV, JSON, and Markdown artifacts under `results/`, limited to the 2026-06-16 evidence chain.
-- Corrected 600-dpi manuscript summary figures and their source CSVs under `results/paper_ready_figures/`.
+- Manuscript Figure 1-8 source CSVs under `results/figure_source_data/`.
+- Corrected 600-dpi manuscript summary figure renders and seed-summary CSVs under `results/paper_ready_figures/`.
 - MIT `LICENSE` and `CITATION.cff`.
 
 ## Excluded

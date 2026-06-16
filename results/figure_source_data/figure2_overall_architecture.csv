@@ -1,0 +1,12 @@
+element_type,id,label,source,target,notes
+node,n1,Faulty speed input and observation mask,,,Historical speed channel enters repair front-end.
+node,n2,Speed-channel repair,,,"Temporal candidate, spatial candidate, adaptive fusion, and observed-input blend."
+node,n3,Identity and temporal features,,,"Node identity, time-of-day, and day-of-week bypass repair."
+node,n4,ID-MLP backbone,,,Forecasting backbone shared with the matched baseline.
+node,n5,Prediction output,,,Clean future speed prediction.
+node,n6,Fault-location mask,,,Training-only auxiliary repair supervision; not finite-valued-fault inference input.
+edge,e1,,n1,n2,Repairable speed channel.
+edge,e2,,n2,n4,Repaired speed history.
+edge,e3,,n3,n4,Identity-preserved context pathway.
+edge,e4,,n4,n5,Forecasting path.
+edge,e5,,n6,n2,Dashed training-only supervision path.

@@ -85,15 +85,31 @@
       "actual": 2.1843868514701064,
       "passed": true,
       "source": "results/paper_ready_tables/supplementary_table_s4_complexity_latency.csv"
+    },
+    {
+      "name": "manuscript figure source data files",
+      "expected": 8,
+      "actual": 8,
+      "passed": true,
+      "source": "results/figure_source_data/figure1_controlled_fault_protocol.csv through figure8_ablation_comparison.csv"
     }
   ],
   "generated_tables": [
     "results/paper_ready_tables/table3_ten_seed_faulty_summary.csv",
+    "results/paper_ready_tables/table4_ablation_results.csv",
     "results/paper_ready_tables/supplementary_table_s1_seed_level_paired_statistics.csv",
     "results/paper_ready_tables/supplementary_table_s2_rmse.csv",
     "results/paper_ready_tables/supplementary_table_s3_faultwise_mae.csv",
     "results/paper_ready_tables/supplementary_table_s4_complexity_latency.csv",
     "results/paper_ready_tables/supplementary_table_s5_imputation_forecasting.csv",
-    "results/paper_ready_tables/supplementary_table_s6_horizon12.csv"
+    "results/paper_ready_tables/supplementary_table_s6_horizon12.csv",
+    "results/figure_source_data/figure1_controlled_fault_protocol.csv",
+    "results/figure_source_data/figure2_overall_architecture.csv",
+    "results/figure_source_data/figure3_speed_channel_repair_module.csv",
+    "results/figure_source_data/figure4_average_faulty_mae.csv",
+    "results/figure_source_data/figure5_faultwise_mae_gain.csv",
+    "results/figure_source_data/figure6_imputation_forecasting.csv",
+    "results/figure_source_data/figure7_horizon12_gain.csv",
+    "results/figure_source_data/figure8_ablation_comparison.csv"
   ]
 }

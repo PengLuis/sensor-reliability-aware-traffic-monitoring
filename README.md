@@ -32,6 +32,7 @@ The parameter and latency measurements characterize the overhead of the repair f
 - `scripts/`: preprocessing, matched training, evaluation, audit, and artifact-generation entry points.
 - `configs/matched_baseline_formal.yaml`: the single source for the matched formal protocol.
 - `results/paper_ready_tables/`: compact Table 3 and Supplementary Tables S1-S6 artifacts aligned with the 2026-06-16 manuscript.
+- `results/figure_source_data/`: manuscript Figure 1-8 source CSVs aligned with the 2026-06-16 manuscript.
 - `results/audits/`: machine-readable and Markdown consistency reports for the 2026-06-16 manuscript evidence chain.
 - `DATA_DOWNLOAD_GUIDE.md`: public dataset sources and placement instructions.
 

@@ -1,0 +1,11 @@
+panel,item,role,description
+a,Clean history,historical input,Clean historical speed window used to construct each supervised sample.
+a,Clean future target,prediction target,Future speed target remains clean and is not corrupted by the fault protocol.
+b,RM20,controlled fault,Random missing with missing probability 0.20 in the historical input.
+b,RM40,controlled fault,Random missing with missing probability 0.40 in the historical input.
+b,CO24,controlled fault,"Continuous outage applied to selected historical sensor segments with block length min(24, L)."
+b,GN-high,controlled fault,Gaussian noise with sigma equal to 0.50 training standard deviation in standardized space.
+b,LD-high,controlled fault,Linear drift ramping from 0 to 0.50 training standard deviation across the input window.
+b,SV-high,controlled fault,Stuck-value segment with selected sensors held at the immediately preceding value.
+c,Observation mask,inference-visible mask,Indicates unavailable historical observations for missing and outage faults.
+c,Fault-location mask,training/audit mask,"Controlled generator mask used for repair supervision, auditing, and controlled-oracle imputation."

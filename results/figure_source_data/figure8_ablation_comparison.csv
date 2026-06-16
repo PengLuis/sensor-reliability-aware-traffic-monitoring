@@ -1,0 +1,11 @@
+dataset,variant,avg_faulty_mae_mean,avg_faulty_mae_std,difference_vs_sraf_id_pct,display_label,interpretation
+METR-LA,SRAF-ID,4.8576,0.0824,0.0,+0.00%,final method
+METR-LA,SRAF-ID-gated,4.9157,0.2098,1.197,+1.20%,gated ablation/supplementary variant
+METR-LA,SRAF-ID-temporal-only,4.9407,0.1995,1.711,+1.71%,repair-source ablation
+METR-LA,SRAF-ID-spatial-only,5.0928,0.2018,4.842,+4.84%,repair-source ablation
+METR-LA,SRAF-ID-fixed-fusion,4.9578,0.144,2.063,+2.06%,repair-source ablation
+PEMS-BAY,SRAF-ID,1.9542,0.081,0.0,+0.00%,final method
+PEMS-BAY,SRAF-ID-gated,1.9629,0.0958,0.448,+0.45%,gated ablation/supplementary variant
+PEMS-BAY,SRAF-ID-temporal-only,1.9401,0.086,-0.721,-0.72%,repair-source ablation
+PEMS-BAY,SRAF-ID-spatial-only,2.0866,0.0559,6.775,+6.78%,repair-source ablation
+PEMS-BAY,SRAF-ID-fixed-fusion,1.9913,0.0599,1.901,+1.90%,repair-source ablation
