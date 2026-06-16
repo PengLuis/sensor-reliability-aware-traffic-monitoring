@@ -5,7 +5,8 @@ The repository is public and licensed under the MIT License.
 ## Version Status
 
 - `v1.0.0`: preserved initial public package for provenance only; it is not the manuscript-aligned evidence version.
-- `v1.0.1`: current manuscript-consistent matched-baseline release aligned with the 2026-06-16 Sensors submission files.
+- `v1.0.1`: preserved manuscript-consistent matched-baseline package before cleanup of legacy exploratory artifacts.
+- `v1.0.2`: current 2026-06-16 Sensors submission release with the cleaned manuscript evidence chain.
 
 ## Included
 

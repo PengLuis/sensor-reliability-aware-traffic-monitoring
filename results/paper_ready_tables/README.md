@@ -1,6 +1,6 @@
 # Paper-Ready Tables
 
-This directory contains the compact manuscript-facing table artifacts aligned with the 2026-06-16 Sensors submission version and GitHub release `v1.0.1`.
+This directory contains the compact manuscript-facing table artifacts aligned with the 2026-06-16 Sensors submission version and GitHub release `v1.0.2`.
 
 Authoritative files:
 
