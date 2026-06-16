@@ -2,18 +2,21 @@
 
 This repository contains the public code and compact result artifacts for the SRAF-ID Sensors manuscript. The study evaluates traffic speed forecasting under controlled missing, outage, noise, drift, and stuck-value corruption of historical sensor observations. It does not claim online detection of unknown faults or universal robustness to real sensor failures.
 
+In this project, **sensor-reliability-aware** means that the repair weights use observation availability, local temporal consistency, and temporal-spatial candidate disagreement. It does not mean that the model outputs an explicit sensor-health probability or performs online unknown-fault detection.
+
 ## Paper Model Mapping
 
 - Paper name: `SRAF-ID`
-- Implementation: `SRAFOfficialStyleSTIDWrapperFactorAblation` with `SRAFRepairFactorAblation`
+- Stable public entry: `src.models.sraf_id.SRAFID`
+- Frozen implementation provenance: `SRAFOfficialStyleSTIDWrapperFactorAblation` with `SRAFRepairFactorAblation`
 - Internal formal-run name: `A3_mlp_only_softmax_no_profile`
 - Fusion: learned two-way softmax over temporal and spatial repair candidates
 - Additional learned reliability gate: none
 - Observed-input blend: fixed at `0.5`
 - Recorded parameter growth: about `0.17%` relative to matched ID-MLP-CA
-- Recorded full-test inference latency: `1.906x` on METR-LA and `2.184x` on PEMS-BAY in the saved formal artifacts
+- Recorded full-test inference latency: `1.906×` on METR-LA and `2.184×` on PEMS-BAY in the saved formal artifacts
 
-The saved results show limited parameter growth but measurable latency overhead.
+The parameter and latency measurements characterize the overhead of the repair front-end; they are not used as a claim of general lightweight or low-latency superiority over other traffic-forecasting algorithms.
 
 ## Recorded Execution Environment
 
@@ -58,7 +61,16 @@ python -m pip install -r requirements-optional.txt
 
 ## Data Preparation
 
-Download the public datasets described in `DATA_DOWNLOAD_GUIDE.md` and place them under `data/raw/`. Then run:
+Download the CSV files and adjacency artifacts described in `DATA_DOWNLOAD_GUIDE.md`. The recommended placement is:
+
+```text
+data/raw/METR-LA.csv
+data/raw/PEMS-BAY.csv
+data/raw/adj_mx_METR-LA.pkl
+data/raw/adj_mx_bay.pkl
+```
+
+Then run:
 
 ```bash
 python scripts/preprocess_data.py --dataset METR-LA --raw-dir data/raw --processed-dir data/processed
@@ -109,11 +121,13 @@ These commands validate execution only and must not be used as manuscript eviden
 - Synthetic smoke outputs check execution only and are not manuscript evidence.
 - Controlled fault-location masks are used for auxiliary repair supervision and controlled-oracle imputation baselines.
 - For finite-valued noise, drift, and stuck-value faults, fault-location masks are not inference inputs to SRAF-ID; the observation-availability mask remains one at finite positions.
+- The formal paper evaluates the complete framework and does not separately isolate the auxiliary repair-loss contribution through a dedicated loss-weight ablation.
 
 ## Quick Checks
 
 ```bash
 python -m compileall src scripts
+python -c "from src.models.sraf_id import SRAFID; print(SRAFID.__name__)"
 python scripts/test_faults.py
 pytest -q tests/test_matched_protocol.py
 ```
