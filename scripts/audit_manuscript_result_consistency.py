@@ -55,6 +55,8 @@ def population_std(values: pd.Series) -> float:
 def load_per_seed(evidence_root: Path) -> pd.DataFrame:
     sraf_path = evidence_root / "experiments/sraf_id_final_figure_table_package/sraf_id_softmax_formal_per_seed_metrics.csv"
     id_path = evidence_root / "experiments/id_mlp_ca_matched_fault_distribution_10seed/aggregate/formal_10seed_per_seed_metrics.csv"
+    if not sraf_path.exists() or not id_path.exists():
+        raise FileNotFoundError("Public fallback required: internal per-seed experiment exports are not present.")
     frames = [pd.read_csv(sraf_path), pd.read_csv(id_path)]
     rows = pd.concat(frames, ignore_index=True, sort=False)
     required = {"dataset", "seed", "model", "fault", "mae", "rmse", "h12_mae"}
@@ -171,6 +173,16 @@ def complexity_table(evidence_root: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def load_public_ready_tables(table_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    summary = pd.read_csv(table_dir / "table3_ten_seed_faulty_summary.csv")
+    s2 = pd.read_csv(table_dir / "supplementary_table_s2_rmse.csv")
+    s3 = pd.read_csv(table_dir / "supplementary_table_s3_faultwise_mae.csv")
+    s4 = pd.read_csv(table_dir / "supplementary_table_s4_complexity_latency.csv")
+    s5 = pd.read_csv(table_dir / "supplementary_table_s5_imputation_forecasting.csv")
+    s6 = pd.read_csv(table_dir / "supplementary_table_s6_horizon12.csv")
+    return summary, s2, s3, s4, s5, s6
+
+
 def add_check(checks: list[dict[str, Any]], name: str, actual: float, source: str, decimals: int = 4) -> None:
     expected = EXPECTED[name]
     passed = round(float(actual), decimals) == round(float(expected), decimals)
@@ -189,41 +201,51 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     table_dir.mkdir(parents=True, exist_ok=True)
 
-    rows = load_per_seed(evidence_root)
-    summary = seed_summary(rows)
-    summary.to_csv(table_dir / "table3_ten_seed_faulty_summary.csv", index=False)
-    s2 = fault_table(rows, "rmse", "RMSE")
-    s3 = fault_table(rows, "mae", "MAE")
-    s4 = complexity_table(evidence_root)
-    s5 = imputation_table(evidence_root, summary)
-    s6 = horizon_table(rows)
-    s2.to_csv(table_dir / "supplementary_table_s2_rmse.csv", index=False)
-    s3.to_csv(table_dir / "supplementary_table_s3_faultwise_mae.csv", index=False)
-    s4.to_csv(table_dir / "supplementary_table_s4_complexity_latency.csv", index=False)
-    s5.to_csv(table_dir / "supplementary_table_s5_imputation_forecasting.csv", index=False)
-    s6.to_csv(table_dir / "supplementary_table_s6_horizon12.csv", index=False)
+    try:
+        rows = load_per_seed(evidence_root)
+        summary = seed_summary(rows)
+        summary.to_csv(table_dir / "table3_ten_seed_faulty_summary.csv", index=False)
+        s2 = fault_table(rows, "rmse", "RMSE")
+        s3 = fault_table(rows, "mae", "MAE")
+        s4 = complexity_table(evidence_root)
+        s5 = imputation_table(evidence_root, summary)
+        s6 = horizon_table(rows)
+        s2.to_csv(table_dir / "supplementary_table_s2_rmse.csv", index=False)
+        s3.to_csv(table_dir / "supplementary_table_s3_faultwise_mae.csv", index=False)
+        s4.to_csv(table_dir / "supplementary_table_s4_complexity_latency.csv", index=False)
+        s5.to_csv(table_dir / "supplementary_table_s5_imputation_forecasting.csv", index=False)
+        s6.to_csv(table_dir / "supplementary_table_s6_horizon12.csv", index=False)
+        source = "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
+    except FileNotFoundError:
+        summary, s2, s3, s4, s5, s6 = load_public_ready_tables(table_dir)
+        source = "public paper-ready tables bundled in results/paper_ready_tables"
 
     s1_source = evidence_root / "seed_level_paired_statistics.csv"
     if s1_source.exists():
         shutil.copy2(s1_source, table_dir / "supplementary_table_s1_seed_level_paired_statistics.csv")
 
     checks: list[dict[str, Any]] = []
-    source = "formal per-seed metrics for matched ID-MLP-CA and SRAF-ID"
-    index = summary.set_index(["dataset", "model"])
+    summary_norm = summary.rename(columns={"faulty_mae_mean": "faulty_mae_mean", "faulty_mae_std": "faulty_mae_std"})
+    index = summary_norm.set_index(["dataset", "model"])
     for dataset in ("METR-LA", "PEMS-BAY"):
         ref = float(index.loc[(dataset, "ID-MLP-CA"), "faulty_mae_mean"])
         val = float(index.loc[(dataset, "SRAF-ID"), "faulty_mae_mean"])
         add_check(checks, f"{dataset} ID-MLP-CA faulty average", ref, source, 4)
         add_check(checks, f"{dataset} SRAF-ID faulty average", val, source, 4)
         add_check(checks, f"{dataset} relative reduction", gain(ref, val), source, 3)
-    add_check(checks, "positive fault-wise MAE comparisons", int((s3["Relative gain (%)"] > 0).sum()), str(table_dir / "supplementary_table_s3_faultwise_mae.csv"), 0)
-    add_check(checks, "positive horizon-12 comparisons", int((s6["Relative gain (%)"] > 0).sum()), str(table_dir / "supplementary_table_s6_horizon12.csv"), 0)
+    add_check(checks, "positive fault-wise MAE comparisons", int((s3["Relative gain (%)"] > 0).sum()), "results/paper_ready_tables/supplementary_table_s3_faultwise_mae.csv", 0)
+    add_check(checks, "positive horizon-12 comparisons", int((s6["Relative gain (%)"] > 0).sum()), "results/paper_ready_tables/supplementary_table_s6_horizon12.csv", 0)
     for _, row in s4.iterrows():
-        add_check(checks, f"{row['Dataset']} parameter increase", row["Parameter increase (%)"], str(table_dir / "supplementary_table_s4_complexity_latency.csv"), 3)
-        add_check(checks, f"{row['Dataset']} latency ratio", row["Latency ratio"], str(table_dir / "supplementary_table_s4_complexity_latency.csv"), 3)
+        add_check(checks, f"{row['Dataset']} parameter increase", row["Parameter increase (%)"], "results/paper_ready_tables/supplementary_table_s4_complexity_latency.csv", 3)
+        add_check(checks, f"{row['Dataset']} latency ratio", row["Latency ratio"], "results/paper_ready_tables/supplementary_table_s4_complexity_latency.csv", 3)
 
     status = "PASS" if all(item["passed"] for item in checks) else "FAIL"
-    report = {"status": status, "evidence_root": str(evidence_root), "checks": checks, "generated_tables": sorted(str(path) for path in table_dir.glob("*.csv"))}
+    report = {
+        "status": status,
+        "evidence_root": ".",
+        "checks": checks,
+        "generated_tables": sorted(str(path.relative_to(evidence_root)).replace("\\", "/") for path in table_dir.glob("*.csv")),
+    }
     (output_dir / "MANUSCRIPT_RESULT_CONSISTENCY_REPORT.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     lines = ["# Manuscript Result Consistency Report", "", f"Status: **{status}**", "", "| Check | Expected | Actual | Pass | Source |", "|---|---:|---:|:---:|---|"]
     for item in checks:
