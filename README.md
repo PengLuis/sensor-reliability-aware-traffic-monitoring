@@ -14,7 +14,7 @@ In this project, **sensor-reliability-aware** means that the repair weights use 
 - Additional learned reliability gate: none
 - Observed-input blend: fixed at `0.5`
 - Recorded parameter growth: about `0.17%` relative to matched ID-MLP-CA
-- Recorded full-test inference latency: `1.906×` on METR-LA and `2.184×` on PEMS-BAY in the saved formal artifacts
+- Recorded full-test inference latency: `1.906x` on METR-LA and `2.184x` on PEMS-BAY in the saved formal artifacts
 
 The parameter and latency measurements characterize the overhead of the repair front-end; they are not used as a claim of general lightweight or low-latency superiority over other traffic-forecasting algorithms.
 
@@ -31,8 +31,8 @@ The parameter and latency measurements characterize the overhead of the repair f
 - `src/`: models, faults, metrics, data utilities, and shared protocol loader.
 - `scripts/`: preprocessing, matched training, evaluation, audit, and artifact-generation entry points.
 - `configs/matched_baseline_formal.yaml`: the single source for the matched formal protocol.
-- `results/paper_ready_tables/`: compact S1-S6 and manuscript-facing CSV artifacts.
-- `results/audits/`: machine-readable and Markdown consistency reports.
+- `results/paper_ready_tables/`: compact Table 3 and Supplementary Tables S1-S6 artifacts aligned with the 2026-06-16 manuscript.
+- `results/audits/`: machine-readable and Markdown consistency reports for the 2026-06-16 manuscript evidence chain.
 - `DATA_DOWNLOAD_GUIDE.md`: public dataset sources and placement instructions.
 
 ## Excluded

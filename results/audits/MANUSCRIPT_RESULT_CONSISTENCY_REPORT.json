@@ -88,26 +88,12 @@
     }
   ],
   "generated_tables": [
-    "results/paper_ready_tables/main_table_avg_faulty.csv",
-    "results/paper_ready_tables/main_table_baseline_comparison.csv",
-    "results/paper_ready_tables/main_table_nogate_ablation.csv",
-    "results/paper_ready_tables/main_table_per_fault_mae.csv",
-    "results/paper_ready_tables/main_table_saits_ppca_knn.csv",
-    "results/paper_ready_tables/supplementary_complexity_latency.csv",
-    "results/paper_ready_tables/supplementary_horizon_metrics.csv",
-    "results/paper_ready_tables/supplementary_seed_stability.csv",
+    "results/paper_ready_tables/table3_ten_seed_faulty_summary.csv",
     "results/paper_ready_tables/supplementary_table_s1_seed_level_paired_statistics.csv",
     "results/paper_ready_tables/supplementary_table_s2_rmse.csv",
     "results/paper_ready_tables/supplementary_table_s3_faultwise_mae.csv",
     "results/paper_ready_tables/supplementary_table_s4_complexity_latency.csv",
     "results/paper_ready_tables/supplementary_table_s5_imputation_forecasting.csv",
-    "results/paper_ready_tables/supplementary_table_s6_horizon12.csv",
-    "results/paper_ready_tables/table3_ten_seed_faulty_summary.csv",
-    "results/paper_ready_tables/table_2_main_avg_faulty_mae.csv",
-    "results/paper_ready_tables/table_3_per_fault_mae.csv",
-    "results/paper_ready_tables/table_4_external_imputation_baselines.csv",
-    "results/paper_ready_tables/table_5_ablation_gated_variant.csv",
-    "results/paper_ready_tables/table_6_horizon_metrics.csv",
-    "results/paper_ready_tables/table_7_complexity_latency.csv"
+    "results/paper_ready_tables/supplementary_table_s6_horizon12.csv"
   ]
 }
