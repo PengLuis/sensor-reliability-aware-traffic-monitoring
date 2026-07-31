@@ -1,0 +1,44 @@
+{
+  "stage": "SRAF_ID_REVIEWER_REVISION_EXPERIMENTS_20260728",
+  "dataset": "METR-LA",
+  "variant": "sraf_id_lambda000",
+  "seed": 45,
+  "history_length": 12,
+  "prediction_horizon": 12,
+  "training_faults": [
+    "CO24",
+    "RM40",
+    "GN-high",
+    "LD-high",
+    "SV-high"
+  ],
+  "evaluation_faults": [
+    "clean",
+    "RM20",
+    "RM40",
+    "CO24",
+    "GN-high",
+    "LD-high",
+    "SV-high"
+  ],
+  "backbone": "ID-MLP",
+  "optimizer": "Adam",
+  "epochs": 60,
+  "patience": 10,
+  "batch_size": 64,
+  "learning_rate": 0.002,
+  "weight_decay": 0.0001,
+  "gradient_clipping": 5.0,
+  "repair_loss_weight": 0.0,
+  "observed_input_blend": 0.5,
+  "target_corrupted": false,
+  "finite_fault_mask_used_as_model_input": false,
+  "seed_policy": {
+    "python": 45,
+    "numpy": 45,
+    "torch_cpu": 45,
+    "torch_cuda": 45,
+    "sampler": 45,
+    "fault": "seed+fault_index / seed+training_step"
+  }
+}

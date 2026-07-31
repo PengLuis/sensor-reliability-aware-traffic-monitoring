@@ -1,0 +1,18 @@
+{
+  "stage": "SRAF_ID_FINAL_REVISION_EVIDENCE_FREEZE_20260730",
+  "generated_at": "2026-07-30T20:06:38",
+  "repository_root": "E:\\paper_projects\\sensors_faulty_sensor_paper",
+  "git_commit": "GIT_METADATA_NOT_AVAILABLE",
+  "python": "3.12.13 (main, Mar  3 2026, 15:01:35) [MSC v.1944 64 bit (AMD64)]",
+  "pytorch": "2.4.1+cu121",
+  "cuda_runtime": "12.1",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "os": "Windows-11-10.0.26200-SP0",
+  "dataset_paths": [
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\data\\processed\\metr-la",
+    "E:\\paper_projects\\sensors_faulty_sensor_paper\\data\\processed\\pems-bay"
+  ],
+  "formal_config": "embedded per-run config.json/config_snapshot.json; protocol fixed by final-stage request"
+}

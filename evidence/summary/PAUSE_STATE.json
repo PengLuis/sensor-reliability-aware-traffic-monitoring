@@ -1,0 +1,23 @@
+{
+  "stage": "SRAF_ID_FINAL_REVISION_EVIDENCE_FREEZE_20260730",
+  "status": "COMPLETED",
+  "pause_verified_at": "2026-07-30T07:56:16+08:00",
+  "completed_new_runs": 80,
+  "required_new_runs": 80,
+  "remaining_new_runs": 0,
+  "completed_matrix": {
+    "metr_la": "40/40",
+    "pems_bay": "40/40"
+  },
+  "interrupted_in_progress_runs": [
+    "final_ablation__pems_bay__temporal_only_forecast_only__seed48",
+    "final_ablation__pems_bay__temporal_only_forecast_only__seed49"
+  ],
+  "resume_behavior": "The two interrupted configurations restart from the same seed and unchanged config. All 46 completed run_status.json files are hash-checked and skipped.",
+  "worker_count_on_resume": 2,
+  "resumed_at": "2026-07-30T07:58:32+08:00",
+  "completed_at": "2026-07-30T19:27:12+08:00",
+  "automatic_finalizer": "completed",
+  "hourly_heartbeat": "disabled_after_completion",
+  "artifacts_preserved": true
+}

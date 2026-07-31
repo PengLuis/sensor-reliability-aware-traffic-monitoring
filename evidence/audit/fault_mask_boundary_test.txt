@@ -1,0 +1,4 @@
+PASS
+Test B: randomizing an offline synthetic M_fault tensor leaves predictions bitwise unchanged.
+Test C: diagnostics on/off predictions are bitwise identical.
+Test E: forecast-only branch does not materialize M_fault on device and does not compute repair loss.

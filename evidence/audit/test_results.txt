@@ -1,0 +1,12 @@
+PASS fault_mask_boundary_test.txt
+PASS final_model_loss_test.txt
+PASS final_model_forward_signature.txt
+PASS 80/80 new architecture run_status files completed
+PASS 120/120 final manifest entries completed
+PASS every architecture seed contains clean plus six faults
+PASS all required table numeric fields contain no NaN/Inf
+PASS six required PNG/PDF figure pairs exist and are non-empty
+PASS Markdown and DOCX final reports exist; DOCX parsed with 49 paragraphs
+PASS final_completeness_check.csv
+PASS table_figure_consistency_check.csv
+PASS old_value_residual_scan.csv

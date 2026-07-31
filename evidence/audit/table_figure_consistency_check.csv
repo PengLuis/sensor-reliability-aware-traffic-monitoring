@@ -1,0 +1,16 @@
+artifact,rows,finite_numeric,pass
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\auxiliary_loss_ablation.csv,4.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\auxiliary_loss_validation_sensitivity.csv,40.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_architecture_ablation.csv,10.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_architecture_ablation_faultwise.csv,60.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_faultwise_results.csv,12.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_horizon_results.csv,42.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_imputation_comparison.csv,6.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_latency_results.csv,16.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\tables\revised_main_results.csv,4.0,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\auxiliary_loss_sensitivity.png,,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\revised_architecture_ablation.png,,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\revised_faultwise_gain.png,,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\revised_horizon12_gain.png,,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\revised_imputation_comparison.png,,True,True
+E:\paper_projects\sensors_faulty_sensor_paper\artifacts\revision_final_20260730\figures\revised_overall_mae.png,,True,True

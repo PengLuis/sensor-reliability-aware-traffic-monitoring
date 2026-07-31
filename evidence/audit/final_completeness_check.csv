@@ -1,0 +1,13 @@
+check,dataset,variant,observed_seeds,observed_faults,pass
+10 seeds and clean+6 faults,metr_la,sraf_id_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,metr_la,temporal_only_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,metr_la,spatial_only_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,metr_la,fixed_fusion_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,metr_la,gated_fusion_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,pems_bay,sraf_id_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,pems_bay,temporal_only_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,pems_bay,spatial_only_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,pems_bay,fixed_fusion_forecast_only,10.0,7.0,True
+10 seeds and clean+6 faults,pems_bay,gated_fusion_forecast_only,10.0,7.0,True
+no NaN/Inf in architecture metrics,all,all,,,True
+all manifest runs complete,all,all,,,True

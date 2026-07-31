@@ -1,0 +1,8 @@
+{
+  "dataset": "PEMS-BAY",
+  "variant": "sraf_id_lambda000",
+  "seed": 44,
+  "clean_mae": 1.8178725242614746,
+  "faulty_average_mae": 1.964293380578359,
+  "test_results_descriptive_only": true
+}

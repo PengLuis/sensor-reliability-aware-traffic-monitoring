@@ -1,0 +1,8 @@
+{
+  "dataset": "METR-LA",
+  "variant": "sraf_id_lambda000",
+  "seed": 42,
+  "clean_mae": 4.633394241333008,
+  "faulty_average_mae": 4.818487803141276,
+  "test_results_descriptive_only": true
+}

@@ -1,0 +1,3 @@
+PASS
+(x: 'torch.Tensor', adjacency: 'torch.Tensor | None' = None, observed_mask: 'torch.Tensor | None' = None, return_components: 'bool' = False) -> 'torch.Tensor | tuple[torch.Tensor, dict[str, torch.Tensor]]'
+M_fault is absent from the forward signature.
